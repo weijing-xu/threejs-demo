@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
-    <title>My first three.js app</title>
+    <title>通过两点画直线</title>
     <style>
         body { margin: 0; }
     </style>
@@ -23,8 +23,6 @@
      */
     import * as THREE from 'three';
 
-
-
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 
     /**
@@ -41,8 +39,6 @@
      */
     const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
-    camera.position.set(10, 10, 10)
-
     /**
      * 创建一个WebGL渲染器
      */
@@ -53,8 +49,6 @@
      */
     renderer.setSize( window.innerWidth, window.innerHeight );
     document.body.appendChild( renderer.domElement );
-
-
 
 
     const controls = new OrbitControls( camera, renderer.domElement );
@@ -74,37 +68,37 @@
     scene.add( axesHelper );
 
 
-    /**
-     * 创建一个立方体的几何体
-     */
-    const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+    // const plane = new THREE.Plane( new THREE.Vector3( 1, 1, 0.2 ), 3 );
+    // const helper = new THREE.PlaneHelper( plane, 10, 0xffff00 );
+    // scene.add( helper );
 
-    /**
-     * 创建一个基本材质，设置颜色为绿色
-     */
-    const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
 
-    /**
-     * 创建一个网格对象（立方体），并将其添加到场景中
-     */
-    const cube = new THREE.Mesh( geometry, material );
-    scene.add( cube );
 
-    /**
-     * 设置相机位置
-     */
-    camera.position.z = 5;
+    // 定义两个点
+    const point1 = new THREE.Vector3(1, 2, 3);
+    const point2 = new THREE.Vector3(4, 5, 6);
+
+    // 创建直线的几何体
+    const geometry = new THREE.BufferGeometry().setFromPoints([point1, point2]);
+
+    // 创建直线的材质
+    const material = new THREE.LineBasicMaterial({color: "red"});
+
+    // 创建直线
+    const line = new THREE.Line(geometry, material);
+
+    // 将直线添加到场景
+    scene.add(line);
+
+    // 设置摄像机位置并指向场景中心
+    camera.position.set(0, 0, 20)
+
 
     /**
      * 动画函数，用于每一帧的渲染
      */
     function animate() {
         requestAnimationFrame( animate );
-
-        // 立方体的旋转增加，实现旋转动画
-        cube.rotation.x += 0.01;
-        cube.rotation.y += 0.01;
-
         controls.update();
         // 渲染场景
         renderer.render( scene, camera );

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
-    <title>My first three.js app</title>
+    <title>画两个颜色不一样的点</title>
     <style>
         body { margin: 0; }
     </style>
@@ -23,8 +23,6 @@
      */
     import * as THREE from 'three';
 
-
-
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 
     /**
@@ -41,8 +39,9 @@
      */
     const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
-    camera.position.set(10, 10, 10)
 
+
+    camera.position.set(10, 10, 10)
     /**
      * 创建一个WebGL渲染器
      */
@@ -53,8 +52,6 @@
      */
     renderer.setSize( window.innerWidth, window.innerHeight );
     document.body.appendChild( renderer.domElement );
-
-
 
 
     const controls = new OrbitControls( camera, renderer.domElement );
@@ -74,37 +71,55 @@
     scene.add( axesHelper );
 
 
-    /**
-     * 创建一个立方体的几何体
-     */
-    const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+    // const plane = new THREE.Plane( new THREE.Vector3( 1, 1, 0.2 ), 3 );
+    // const helper = new THREE.PlaneHelper( plane, 10, 0xffff00 );
+    // scene.add( helper );
 
-    /**
-     * 创建一个基本材质，设置颜色为绿色
-     */
-    const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+    // 定义两个点的位置和颜色
+    const positions = [
+        new THREE.Vector3(1, 2, 3), // 第一个点的位置
+        new THREE.Vector3(4, 5, 6)  // 第二个点的位置
+    ];
 
-    /**
-     * 创建一个网格对象（立方体），并将其添加到场景中
-     */
-    const cube = new THREE.Mesh( geometry, material );
-    scene.add( cube );
+    const colors = [
+        new THREE.Color("red"), // 第一个点的颜色，红色
+        new THREE.Color("green")  // 第二个点的颜色，绿色
+    ];
 
-    /**
-     * 设置相机位置
-     */
-    camera.position.z = 5;
+
+    const positionsList = positions.map( p => [p.x, p.y, p.z]).flat() ;
+      const colorsList = colors.map( c => [c.r, c.g, c.b]).flat();
+
+    console.log( positionsList)
+    console.log( colorsList)
+
+
+
+    // 创建点的几何体
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute( positionsList, 3));
+    geometry.setAttribute('color', new THREE.Float32BufferAttribute( colorsList, 3));
+
+    // 创建点的材质，并启用顶点颜色
+    const material = new THREE.PointsMaterial({
+        size:  0.2 , // 点的大小
+        vertexColors: true  // 使用顶点颜色
+    });
+
+    // 创建点的对象
+    const pointsObject = new THREE.Points(geometry, material);
+
+    // 将点的对象添加到场景
+    scene.add(pointsObject);
+
+
+
 
     /**
      * 动画函数，用于每一帧的渲染
      */
     function animate() {
         requestAnimationFrame( animate );
-
-        // 立方体的旋转增加，实现旋转动画
-        cube.rotation.x += 0.01;
-        cube.rotation.y += 0.01;
-
         controls.update();
         // 渲染场景
         renderer.render( scene, camera );
