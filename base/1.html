@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+    <title>My first three.js app</title>
+    <style>
+        body { margin: 0; }
+    </style>
+</head>
+<script type="importmap">
+    {
+        "imports": {
+            "three": "../../node_modules/three/build/three.module.js",
+            "three/addons/": "../../node_modules/three/examples/jsm/"
+        }
+    }
+</script>
+<script type="module">
+    /**
+     * 引入Three.js库
+     */
+    import * as THREE from 'three';
+
+    /**
+     * 创建一个场景
+     */
+    const scene = new THREE.Scene();
+
+    /**
+     * 创建一个透视相机
+     * @param {number} angle 相机的视野角度
+     * @param {number} aspect 相机视口的宽高比
+     * @param {number} near 视锥体近平面的距离
+     * @param {number} far 视锥体远平面的距离
+     */
+    const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+
+    /**
+     * 创建一个WebGL渲染器
+     */
+    const renderer = new THREE.WebGLRenderer();
+
+    /**
+     * 设置渲染器的大小，并将渲染区域添加到文档主体
+     */
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    document.body.appendChild( renderer.domElement );
+
+    /**
+     * 创建一个立方体的几何体
+     */
+    const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+
+    /**
+     * 创建一个基本材质，设置颜色为绿色
+     */
+    const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+
+    /**
+     * 创建一个网格对象（立方体），并将其添加到场景中
+     */
+    const cube = new THREE.Mesh( geometry, material );
+    scene.add( cube );
+
+    /**
+     * 设置相机位置
+     */
+    camera.position.z = 5;
+
+    /**
+     * 动画函数，用于每一帧的渲染
+     */
+    function animate() {
+        requestAnimationFrame( animate );
+
+        // 立方体的旋转增加，实现旋转动画
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.01;
+
+        // 渲染场景
+        renderer.render( scene, camera );
+    }
+
+    // 启动动画
+    animate();
+
+</script>
+<body>
+
+</body>
+</html>

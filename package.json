@@ -1,0 +1,28 @@
+{
+  "name": "threejs-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "serve ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/weijing-xu/threejs-demo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/weijing-xu/threejs-demo/issues"
+  },
+  "homepage": "https://github.com/weijing-xu/threejs-demo#readme",
+  "dependencies": {
+    "gsap": "^3.12.5",
+    "three": "^0.164.1",
+    "tween.js": "^16.6.0"
+  },
+  "devDependencies": {
+    "serve": "^14.2.3"
+  }
+}

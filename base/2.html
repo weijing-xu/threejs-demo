@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+    <title>WebGL compatibility check</title>
+</head>
+<script type="importmap">
+    {
+        "imports": {
+            "three": "../../node_modules/three/build/three.module.js",
+            "three/addons/": "../../node_modules/three/examples/jsm/"
+        }
+    }
+</script>
+<script type="module">
+
+    import WebGL from 'three/addons/capabilities/WebGL.js';
+
+    if ( WebGL.isWebGLAvailable() ) {
+
+        // Initiate function or other initializations here
+        animate();
+
+    } else {
+
+        const warning = WebGL.getWebGLErrorMessage();
+        document.getElementById( 'container' ).appendChild( warning );
+
+    }
+    function animate() {
+         console.log('WebGL is available')
+        let div = document.createElement( 'div');
+         div.innerHTML = 'WebGL is available';
+        document.getElementById( 'container' ).appendChild(div);
+    }
+
+</script>
+<body>
+<div id="container"></div>
+</body>
+</html>

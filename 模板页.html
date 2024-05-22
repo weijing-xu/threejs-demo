@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <title>Title</title>
+</head>
+<script type="importmap">
+  {
+      "imports": {
+          "three": "../node_modules/three/build/three.module.js",
+          "three/addons/": "./node_modules/three/examples/jsm/"
+      }
+  }
+</script>
+<script type="module">
+  import * as THREE from 'three';
+  // 浏览器控制台测试，是否引入成功
+  console.log(THREE.Scene);
+  import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+  // 扩展库GLTFLoader.js
+  import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+  console.log(THREE);
+  console.log(OrbitControls);
+  console.log(GLTFLoader);
+</script>
+<body>
+
+</body>
+</html>
